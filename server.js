@@ -3,14 +3,14 @@ const app = express()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
 const { v4: uuidV4 } = require('uuid')
-httpProxy = require('http-proxy');
+//const httpProxy = require('http-proxy');
 //
 // Create your proxy server and set the target in the options.
 //
-httpProxy.createProxyServer({
+/*httpProxy.createProxyServer({
   target:'https://videochat-app.newton-schools.com/',
   ws: true
-}).listen(8000);
+}).listen(8000);*/
 
 app.set('view engine', 'ejs')
 app.use(express.static('assets'))
@@ -28,10 +28,10 @@ app.get('/:room', (req, res) => {
 io.on('connection', socket => {
   socket.on('join-room', (roomId, userId) => {
     socket.join(roomId)
-    socket.to(roomId).broadcast.emit('user-connected', userId)
+    socket.broadcast.to(roomId).emit('user-connected', userId)//here
 
     socket.on('disconnect', () => {
-      socket.to(roomId).broadcast.emit('user-disconnected', userId)
+      socket.broadcast.to(roomId).emit('user-disconnected', userId)
     })
   })
 })

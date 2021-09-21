@@ -1,3 +1,4 @@
+var fs = require('fs');
 const express = require('express')
 const app = express()
 const server = require('http').Server(app)
@@ -11,6 +12,19 @@ const { v4: uuidV4 } = require('uuid')
   target:'https://videochat-app.newton-schools.com/',
   ws: true
 }).listen(8000);*/
+
+// setting peerjs server:
+var PeerServer = require('peer').PeerServer;
+
+var server2 = PeerServer({
+  port: 9000,
+  path: '/myapp',
+  ssl: {
+    key: fs.readFileSync('/etc/letsencrypt/live/newton-schools.com/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/newton-schools.com/fullchain.pem')
+  }
+});
+
 
 app.set('view engine', 'ejs')
 app.use(express.static('assets'))

@@ -4,14 +4,7 @@ const app = express()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
 const { v4: uuidV4 } = require('uuid')
-//const httpProxy = require('http-proxy');
-//
-// Create your proxy server and set the target in the options.
-//
-/*httpProxy.createProxyServer({
-  target:'https://videochat-app.newton-schools.com/',
-  ws: true
-}).listen(8000);*/
+
 
 // setting peerjs server:
 var PeerServer = require('peer').PeerServer;

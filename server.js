@@ -15,7 +15,8 @@ var server2 = PeerServer({
   ssl: {
     key: fs.readFileSync('/etc/letsencrypt/live/newton-schools.com/privkey.pem'),
     cert: fs.readFileSync('/etc/letsencrypt/live/newton-schools.com/fullchain.pem')
-  }
+  },
+  proxied: true
 });
 
 
@@ -32,9 +33,14 @@ app.get('/:room', (req, res) => {
 
 
 
+
 io.on('connection', socket => {
   socket.on('join-room', (roomId, userId) => {
     socket.join(roomId)
+    
+    //socket.on('connection-request',(roomId,userId)=>{ //added this to solve loading time
+      //socket.broadcast.to(roomId).emit('new-user-connected', userId);
+    //})
     socket.broadcast.to(roomId).emit('user-connected', userId)//here
 
     socket.on('disconnect', () => {

@@ -4,10 +4,14 @@ const videoGrid = document.getElementById('video-grid');
 const myPeer = new Peer(undefined, {
     host: 'newton-schools.com',
     port: '9000',
-    path: '/myapp'
+    path: '/myapp',
+    secure: true,
+    config: {'iceServers': [
+        { url: 'turn:turn.newton-schools.com', credential: 'NUM509022', username: 'ilyes' }
+      ]} 
   });
 
-peers = {};
+const peers = {};
 const myVideo = document.createElement('video');
 myVideo.muted = true;
 
@@ -15,24 +19,34 @@ navigator.mediaDevices.getUserMedia({
     video: true,
     audio: true
 }).then( stream => {
+        addVideoStream(myVideo, stream);  
+        
+        
 
-        addVideoStream(myVideo, stream);
-    
+        myPeer.on('call', call => {
+            call.answer(stream);
+            const video = document.createElement('video');
+            call.on('stream', userVideoStream => {
+                addVideoStream(video, userVideoStream)
+                })
+            })
 
-myPeer.on('call', call => {
-    call.answer(stream);
-    const video = document.createElement('video');
-    call.on('stream', userVideoStream => {
-        addVideoStream(video, userVideoStream)
-        })
-    })
+        
+        socket.on('user-connected', userId =>{//here edit user_connected
+                if(userId!=myPeer.id){
+                    console.log("New user: "+userId);
+                    console.log("stream: " + stream);
+                    setTimeout(connectToNewUser(userId,stream), 1000);
+                }
+            })
+            
 
-    socket.on('user-connected', userId => {
-        connectToNewUser(userId, stream);
-    });
+        
+        });
 
-});
 
+//console.log("roo: " + ROOM_ID + " -----" + "peer id: " + myPeer.id) 
+//socket.emit('connection-request', ROOM_ID, myPeer.id);//added this to try and correct long loading time.
 
 
 socket.on('user-disconnected', userId => {

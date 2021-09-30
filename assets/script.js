@@ -1,65 +1,124 @@
-const socket = io('/', {transports: ['websocket']})
+const socket = io();
 const videoGrid = document.getElementById('videoGrid')
 const myVideo = document.createElement('video')
 myVideo.muted = true
 
 var peer = new Peer(undefined, {
-    host: '/',
-    //port: '9000',
-    path: '/peerjs',
-    secure: true,
-    config: {'iceServers': [
-		{ url: 'stun:stun.l.google.com:19302' },
-		{ url: 'stun:stun1.l.google.com:19302' },
-		{ url: 'stun:stun2.l.google.com:19302' },
-		{ url: 'stun:stun3.l.google.com:19302' },
-		{ url: 'stun:stun4.l.google.com:19302' },
-		{ url: 'stun:stun01.sipphone.com' },
-		{ url: 'stun:stun.ekiga.net' },
-		{ url: 'stun:stun.fwdnet.net' },
-		{ url: 'stun:stun.ideasip.com' },
-		{ url: 'stun:stun.iptel.org' },
-		{ url: 'stun:stun.rixtelecom.se' },
-		{ url: 'stun:stun.schlund.de' },
-    	{ url: 'stun:stunserver.org' },
-		{ url: 'stun:stun.softjoys.com' },
-		{ url: 'stun:stun.voiparound.com' },
-		{ url: 'stun:stun.voipbuster.com' },
-		{ url: 'stun:stun.voipstunt.com' },
-		{ url: 'stun:stun.voxgratia.org' },
-		{ url: 'stun:stun.xten.com' },
-        { url: 'turn:turn.newton-schools.com', credential: 'NUM509022', username: 'ilyes' }
-      ]} 
-  })
+	//path: '/myapp',
+	//host: 'newton-schools.com',
+	//port: 4000,
+	host:'peerjs-server.herokuapp.com', 
+	port:443,
+	secure: true,
+	iceServers: [{
+		urls: 'turn:numb.viagenie.ca',
+		credential: 'muazkh',
+		username: 'webrtc@live.com'
+	},
+	{
+		urls: 'turn:192.158.29.39:3478?transport=udp',
+		credential: 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
+		username: '28224511:1379330808'
+	},
+	{
+		urls: 'turn:192.158.29.39:3478?transport=tcp',
+		credential: 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
+		username: '28224511:1379330808'
+	},
+	{
+		urls: 'turn:turn.bistri.com:80',
+		credential: 'homeo',
+		username: 'homeo'
+	 },
+	 {
+		urls: 'turn:turn.anyfirewall.com:443?transport=tcp',
+		credential: 'webrtc',
+		username: 'webrtc'
+	}, 
+	{ urls: 'turn:turn.newton-schools.com', credential: 'NUM509022', username: 'ilyes' },
+	{
+		urls: [
+			  'stun:stun.l.google.com:19302' ,
+			  'stun:stun1.l.google.com:19302' ,
+			  'stun:stun2.l.google.com:19302' ,
+			  'stun:stun3.l.google.com:19302' ,
+			  'stun:stun4.l.google.com:19302' ,
+			  'stun:stun01.sipphone.com' ,
+			  'stun:stun.ekiga.net' ,
+			  'stun:stun.fwdnet.net' ,
+			  'stun:stun.ideasip.com' ,
+			  'stun:stun.iptel.org' ,
+			  'stun:stun.rixtelecom.se' ,
+			  'stun:stun.schlund.de' ,
+			  'stun:stunserver.org' ,
+			  'stun:stun.softjoys.com' ,
+			  'stun:stun.voiparound.com' ,
+			  'stun:stun.voipbuster.com' ,
+			  'stun:stun.voipstunt.com' ,
+			  'stun:stun.voxgratia.org' ,
+			  'stun:stun.xten.com' ,
+		]
+	}]
+})
+
 
 const myPeer = new Peer(undefined, {
-    host: '/',
-    //port: '9000',
-    path: '/peerjs',
-    secure: true,
-    config: {'iceServers': [
-		{ url: 'stun:stun.l.google.com:19302' },
-		{ url: 'stun:stun1.l.google.com:19302' },
-		{ url: 'stun:stun2.l.google.com:19302' },
-		{ url: 'stun:stun3.l.google.com:19302' },
-		{ url: 'stun:stun4.l.google.com:19302' },
-		{ url: 'stun:stun01.sipphone.com' },
-		{ url: 'stun:stun.ekiga.net' },
-		{ url: 'stun:stun.fwdnet.net' },
-		{ url: 'stun:stun.ideasip.com' },
-		{ url: 'stun:stun.iptel.org' },
-		{ url: 'stun:stun.rixtelecom.se' },
-		{ url: 'stun:stun.schlund.de' },
-    	{ url: 'stun:stunserver.org' },
-		{ url: 'stun:stun.softjoys.com' },
-		{ url: 'stun:stun.voiparound.com' },
-		{ url: 'stun:stun.voipbuster.com' },
-		{ url: 'stun:stun.voipstunt.com' },
-		{ url: 'stun:stun.voxgratia.org' },
-		{ url: 'stun:stun.xten.com' },
-        { url: 'turn:turn.newton-schools.com', credential: 'NUM509022', username: 'ilyes' }
-      ]} 
-  });
+	//path: '/myapp',
+	//host: 'newton-schools.com',
+	//port: 4000,
+	host:'peerjs-server.herokuapp.com', 
+	port:443,
+	secure: true,
+	iceServers: [{
+		urls: 'turn:numb.viagenie.ca',
+		credential: 'muazkh',
+		username: 'webrtc@live.com'
+	},
+	{
+		urls: 'turn:192.158.29.39:3478?transport=udp',
+		credential: 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
+		username: '28224511:1379330808'
+	},
+	{
+		urls: 'turn:192.158.29.39:3478?transport=tcp',
+		credential: 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
+		username: '28224511:1379330808'
+	},
+	{
+		urls: 'turn:turn.bistri.com:80',
+		credential: 'homeo',
+		username: 'homeo'
+	 },
+	 {
+		urls: 'turn:turn.anyfirewall.com:443?transport=tcp',
+		credential: 'webrtc',
+		username: 'webrtc'
+	}, 
+	{ urls: 'turn:turn.newton-schools.com', credential: 'NUM509022', username: 'ilyes' },
+	{
+		urls: [
+			  'stun:stun.l.google.com:19302' ,
+			  'stun:stun1.l.google.com:19302' ,
+			  'stun:stun2.l.google.com:19302' ,
+			  'stun:stun3.l.google.com:19302' ,
+			  'stun:stun4.l.google.com:19302' ,
+			  'stun:stun01.sipphone.com' ,
+			  'stun:stun.ekiga.net' ,
+			  'stun:stun.fwdnet.net' ,
+			  'stun:stun.ideasip.com' ,
+			  'stun:stun.iptel.org' ,
+			  'stun:stun.rixtelecom.se' ,
+			  'stun:stun.schlund.de' ,
+			  'stun:stunserver.org' ,
+			  'stun:stun.softjoys.com' ,
+			  'stun:stun.voiparound.com' ,
+			  'stun:stun.voipbuster.com' ,
+			  'stun:stun.voipstunt.com' ,
+			  'stun:stun.voxgratia.org' ,
+			  'stun:stun.xten.com' ,
+		]
+	}]
+})
 
 
   const peers = {}
@@ -74,7 +133,8 @@ navigator.mediaDevices
 		addVideoStream(myVideo, stream)
 
 		socket.on('user-connected', (userId) => {
-			setTimeout(connectToNewUser(userId, stream), 3000)
+			setTimeout(connectToNewUser, 3000, userId, stream)
+			//connectToNewUser(userId, stream);
 			alert('Somebody connected', userId)
 		})
 
@@ -115,7 +175,7 @@ navigator.mediaDevices
 							</li>`)
 			scrollToBottom()
 		})
-	})
+	}).catch(function(err) { console.log(err.name + ": " + err.message); });
 
 socket.on('user-disconnected', (userId) => {
 	if (peers[userId]) peers[userId].close()
@@ -139,6 +199,8 @@ const connectToNewUser = (userId, stream) => {
 }
 
 const addVideoStream = (video, stream) => {
+	console.log(video)
+	console.log(stream)
 	video.srcObject = stream
 	video.addEventListener('loadedmetadata', () => {
 		video.play()

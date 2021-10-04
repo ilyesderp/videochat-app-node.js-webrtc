@@ -1,3 +1,3 @@
 # videochat-app-node.js-webrtc
 
-Test the app at: https://document-sharing-app.newton-schools.com
+Test the app at: https://videochat-app.newton-schools.com
